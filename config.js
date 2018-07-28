@@ -12,8 +12,16 @@ class Config {
     this._loadConfig();
   }
 
+  set bridge(bridge) {
+    this._config.bridge = bridge;
+  }
+
   get bridge() {
     return this._config.bridge;
+  }
+
+  set user(user) {
+    this._config.user = user;
   }
 
   get user() {
