@@ -2,3 +2,4 @@ test/
 .eslintrc.json
 .gitignore
 .idea
+hue.log

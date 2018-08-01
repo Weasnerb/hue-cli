@@ -1,6 +1,6 @@
 'use strict';
 
-var program = require('commander');
+const program = require('commander');
 
 // Set all commands
 require('./commands')(program);
@@ -12,10 +12,12 @@ program
   .description(pkg.description)
   .usage('<command> [options]');
 
+program.config = require('./config');
+program.util = require('./util');
 
 program.on('command:*', function () {
-    console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
-    process.exit(1);
+    let message = 'Invalid command: ' + program.args.join(' ') + '\nSee --help for a list of available commands.';
+    program.util.errorMessage(message)
   });
 
 program.parse(process.argv);

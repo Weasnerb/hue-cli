@@ -5,15 +5,21 @@ const hue = require('node-hue-api');
 
 const configPath = path.join(os.homedir(), '.hue');
 
-
+/**
+ * Current Hue Config
+ */
 class Config {
   constructor() {
     this._config = {};
     this._loadConfig();
   }
 
+  /**
+   * Set bridge
+   */
   set bridge(bridge) {
     this._config.bridge = bridge;
+    this._saveConfig();
   }
 
   get bridge() {
@@ -22,6 +28,7 @@ class Config {
 
   set user(user) {
     this._config.user = user;
+    this._saveConfig();
   }
 
   get user() {
@@ -42,7 +49,7 @@ class Config {
     }
   }
   
-  saveConfig() {
+  _saveConfig() {
     fs.writeFileSync(configPath, JSON.stringify(this._config))
   }
 
