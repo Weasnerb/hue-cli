@@ -1,45 +1,76 @@
+'use strict';
+
 module.exports = function sceneCommand(program) {
-  'use strict';
   
-  const hue = require('node-hue-api');
+  const diacritics = require('diacritics');
 
-
-  function listScenes(name, max, print = false) {
-    name = diacritics.remove(name).toLowerCase();
-    return this.api
+  /**
+   * Get Scenes filtered by name and limited by max
+   * @param {string?} name 
+   * @param {number?} max 
+   */
+  function _getScenes(name = '', max) {
+    if (name) {
+      name = diacritics.remove(name).toLowerCase();
+    }
+    return program.config.api
       .scenes()
       .then(scenes => {
-        scenes = scenes
+        return scenes
           .filter(s => diacritics.remove(s.name).toLowerCase().indexOf(name) >= 0)
           .sort((a, b) => {
             let diff = name ? (a.name.length - name.length) - (b.name.length - name.length) : 0;
             return diff ? diff : new Date(b.lastupdated).getTime() - new Date(a.lastupdated).getTime();
           })
           .slice(0, max);
-        return print ?
-          scenes.forEach(s => console.log(s.name.toLowerCase())) :
-          scenes;
       });
   }
 
-  function activateScene(name = '') {
-    return this.listScenes(name, 1)
+  /**
+   * Prints a list of Scenes filtered by name and limited by max
+   * @param {string?} name 
+   * @param {number?} max 
+   */
+  function _printListOfScenes(name, max) {
+    if (max == 0) {
+      program.util.errorMessage('Max cannot be 0');
+    }
+    _getScenes(name, max)
+      .then(scenes => {
+        scenes.forEach(scene => console.log(scene.name));
+      })
+      .fail(() => program.util.errorMessage('No scenes found'))
+  }
+
+  /**
+   * Activate Scene with given name
+   * @param {string?} name 
+   */
+  function _activateScene(name = '') {
+    _getScenes(name, 1)
       .then(scenes => {
         if (scenes.length) {
-          return this.api.activateScene(scenes[0].id);
+          program.config.api.activateScene(scenes[0].id);
+          program.util.successMessage(scenes[0].name + ' successfully activated!')
+        } else {
+          program.util.errorMessage('No scene found with the name ' + name);
         }
-        this._exit(`No scene found with the name "${name}"`);
       });
   }
 
-  function createScene(name) {
+  /**
+   * Create a scene with given name based on current light settings
+   * @param {string?} name 
+   */
+  function _createScene(name) {
     if (!name) {
-      this._exit('No scene name specified')
+      program.util.errorMessage('No scene name specified');
     }
-    return this.api
+    program.config.api
       .getGroup(0)
-      .then(group => this.api.createBasicScene(group.lights, name))
-      .then(() => this._exit('Created scene successfully'), e => this._exit(`Cannot create scene: ${e}`));
+      .then(group => program.config.api.createBasicScene(group.lights, name))
+      .then(() => program.util.successMessage('Created scene successfully!'))
+      .fail((err) => program.util.errorMessage('Cannot create scene with the name ' + name, err));
   }
 
 	program
@@ -50,12 +81,15 @@ module.exports = function sceneCommand(program) {
     .option('-m, --max <n>', 'Show at most <n> scenes when listing (10 by default)')
     .option('-c, --create', 'Create scene <name> using current lights state')
 		.action(function(name, command) {
-
-      console.log('name', name);
-      console.log('list: ', command.list);
-      console.log('max: ', command.max);
-      console.log('create: ', command.create);
-
+      if (command.list) {
+        _printListOfScenes(name, command.max);
+      } else if (command.create) {
+        _createScene(name);
+      } else if (name) {
+        _activateScene(name);
+      } else {
+        command.help();
+      }
 		});
 
 };

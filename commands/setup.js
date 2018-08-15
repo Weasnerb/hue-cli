@@ -1,5 +1,6 @@
+'use strict';
+
 module.exports = function setupCommand(program) {
-  'use strict';
 
   const config = require('../config');
   const hue = require('node-hue-api');
