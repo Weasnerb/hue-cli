@@ -2,7 +2,6 @@
 
 module.exports = function setupCommand(program) {
 
-  const config = require('../config');
   const hue = require('node-hue-api');
 
   /**
@@ -11,8 +10,8 @@ module.exports = function setupCommand(program) {
    * @param {boolean} force Force resetup
    */
   function _setupBridge(ip, force) {
-    if (config.bridge && config.user && !force) {
-      program.util.successMessage('Bridge already configured at ' + config.bridge);
+    if (program.config.bridge && program.config.user && !force) {
+      program.util.successMessage('Bridge already configured at ' + program.config.bridge);
       return;
     }
 
@@ -21,9 +20,9 @@ module.exports = function setupCommand(program) {
       .then((bridges) => {
         let bridge = ip ? bridges.find(b => b.ipaddress === ip) : bridges[0];
         if (bridge) {
-          config.bridge = bridge.ipaddress;
-          console.log('Hue bridge found at ', config.bridge);
-          return config.bridge;
+          program.config.bridge = bridge.ipaddress;
+          console.log('Hue bridge found at ', program.config.bridge);
+          return program.config.bridge;
         }
         return Promise.reject();
       })
@@ -33,7 +32,7 @@ module.exports = function setupCommand(program) {
           new hue.api()
             .registerUser(bridge, 'hue cli utility')
             .then(user => {
-              config.user = user;
+              program.config.user = user;
               program.util.successMessage('Linked bridge successfully');
             })
             .catch((err) => program.util.errorMessage('Cannot link, press the button on bridge and try again.', err));
@@ -48,7 +47,7 @@ module.exports = function setupCommand(program) {
     hue
       .nupnpSearch()
       .then(bridges => {
-        bridges.forEach(b => console.log(b.ipaddress));
+        bridges.forEach(b => console.log(((b.name) ? 'Name: ' +  b.name + ' at ip: ' : '') + b.ipaddress));
       })
       .fail(() => console.error('No bridge found'));
 
