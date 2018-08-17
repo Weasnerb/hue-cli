@@ -34,7 +34,7 @@ module.exports = function switchCommand(program) {
             program.config.api.setGroupLightState(lightGroup.id, { 'on': on })
               .then(program.util.successMessage(lightGroup.name + ' was turned ' + ((on) ? 'on!' : 'off!')));
           } else {
-            program.util.errorMessage('Room with name' + roomName + 'was not found')
+            program.util.errorMessage('Room with name ' + roomName + ' was not found')
           }
         })
       });

@@ -11,15 +11,24 @@ module.exports = function (program) {
   class util {
     /**
      * Display Error, Log err to file, and Exit
-     * @param {string} messageToDisplay 
+     * @param {string|string[]} messageToDisplay 
      * @param {object} [err]
      */
     errorMessage(messageToDisplay, err) {
-      console.error(chalk.red(messageToDisplay));
       if (err && program.debug) {
         this._log(err);
       }
-      process.exit(1);
+      
+      let messages = (!Array.isArray(messageToDisplay) ? [messageToDisplay] : messageToDisplay);
+      
+      // Commander.js error formatting (with coloring)
+      console.error();
+      messages.forEach(function(message, index) {
+        console.error((index == 0 ? '  error: ': '  ') + chalk.red(message));
+      })
+      console.error();
+      
+      return process.exit(1);
     }
 
     /**

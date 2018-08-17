@@ -1,60 +1,66 @@
 'use strict';
 
-const os = require('os');
-const path = require('path');
-const fs = require('fs');
-const hue = require('node-hue-api');
+module.exports = function (program) {
 
-const configPath = path.join(os.homedir(), '.hue');
+  const os = require('os');
+  const path = require('path');
+  const fs = require('fs');
+  const hue = require('node-hue-api');
 
-/**
- * Current Hue Config
- */
-class Config {
-  constructor() {
-    this._config = {};
-    this._loadConfig();
-  }
+  const configPath = path.join(os.homedir(), '.hue');
 
   /**
-   * Set bridge
+   * Current Hue Config
    */
-  set bridge(bridge) {
-    this._config.bridge = bridge;
-    this._saveConfig();
-  }
-
-  get bridge() {
-    return this._config.bridge;
-  }
-
-  set user(user) {
-    this._config.user = user;
-    this._saveConfig();
-  }
-
-  get user() {
-    return this._config.user;
-  }
-
-  get api() {
-    return new hue.api(this.bridge, this.user);
-  }
-
-  _loadConfig() {
-    let config;
-    try {
-      config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-      this._config = config || {};
-    } catch (e) {
-      // Do nothing
+  class config {
+    constructor() {
+      this._config = {};
+      this._loadConfig();
     }
-  }
-  
-  _saveConfig() {
-    fs.writeFileSync(configPath, JSON.stringify(this._config))
+
+    /**
+     * Set bridge
+     */
+    set bridge(bridge) {
+      this._config.bridge = bridge;
+      this._saveConfig();
+    }
+
+    get bridge() {
+      return this._config.bridge;
+    }
+
+    set user(user) {
+      this._config.user = user;
+      this._saveConfig();
+    }
+
+    get user() {
+      return this._config.user;
+    }
+
+    get api() {
+      if (!this.bridge || !this.user) {
+        return program.util.errorMessage('Please connect to a Hue bridge to run commands');
+      }
+      return new hue.api(this.bridge, this.user);
+    }
+
+    _loadConfig() {
+      let config;
+      try {
+        config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+        this._config = config || {};
+      } catch (e) {
+        // Do nothing
+      }
+    }
+    
+    _saveConfig() {
+      fs.writeFileSync(configPath, JSON.stringify(this._config))
+    }
+
   }
 
+  return new config();
 }
-
-module.exports = new Config();
