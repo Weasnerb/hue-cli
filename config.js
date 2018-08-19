@@ -42,10 +42,34 @@ module.exports = function (program) {
     get api() {
       if (!this.bridge || !this.user) {
         return program.util.errorMessage('Please connect to a Hue bridge to run commands');
+
       }
+      this._userExists();
       return new hue.api(this.bridge, this.user);
     }
 
+    /**
+     * Check if User Exists
+     */
+    _userExists() {
+      new hue.api(this.bridge, this.user)
+      .registeredUsers()
+      .then(data => {
+        let exists =  data.devices.filter(u => u.username === this.user).length == 1;
+        if (!exists) {
+          delete this._config.user
+          this._saveConfig();
+
+          let messages = ['User is no longer authenticated', 'Please run setup to re-authenticate']
+          return program.util.errorMessage(messages);
+        }
+      })
+      .fail((err) => program.util.errorMessage('Unable to check if user exists', err));
+    }
+
+    /**
+     * Load Config
+     */
     _loadConfig() {
       let config;
       try {
@@ -56,6 +80,9 @@ module.exports = function (program) {
       }
     }
     
+    /**
+     * Save the config
+     */
     _saveConfig() {
       fs.writeFileSync(configPath, JSON.stringify(this._config))
     }

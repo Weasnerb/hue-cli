@@ -15,11 +15,12 @@ module.exports = function (program) {
      * @param {object} [err]
      */
     errorMessage(messageToDisplay, err) {
+      let messages = (!Array.isArray(messageToDisplay) ? [messageToDisplay] : messageToDisplay);
+      
       if (err && program.debug) {
+        messages.push('For more information see: ' + logPath)
         this._log(err);
       }
-      
-      let messages = (!Array.isArray(messageToDisplay) ? [messageToDisplay] : messageToDisplay);
       
       // Commander.js error formatting (with coloring)
       console.error();
@@ -35,10 +36,11 @@ module.exports = function (program) {
      * Log full error information to file
      * @param {object} err 
      */
-    _log(err) {
-      console.log('For more information see: ' + logPath);
-      let dateTime = new Date();
-      fs.appendFileSync(logPath, dateTime.toJSON() + '::' + err.stack + '\n');
+    _log(error) {
+      if (error && program.debug) {
+        let dateTime = new Date();
+        fs.appendFileSync(logPath, dateTime.toJSON() + '::' + error.stack + '\n');
+      }
     }
 
     /**
