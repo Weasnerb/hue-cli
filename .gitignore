@@ -1,6 +1,8 @@
 node_modules/
 npm-debug.log
+.vscode/*
 .idea/*
 !.idea/runConfigurations/
 !.idea/codeStyleSettings.xml
 .DS_Store
+hue.log
