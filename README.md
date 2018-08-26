@@ -14,22 +14,24 @@ npm install -g @weasnerb/hue-cli-extended
 
 ### Usage
 
+> Note: Each command also has a -h flag for extra help!
+
 ```text
-Usage: hue [setup|scene|on|off]
+  Usage: hue <command> [options]
 
-Commands:
-  setup            Configure hue bridge or show current config
-    -l, --list     List bridges on the network
-    -i, --ip       Set bridge ip (use first bridge if not specified)
-    --force        Force setup if already configured
+  Simple command line interface for Philips Hue
 
-  g, group <name>
+  Options:
 
-  s, scene <name>  Activate scene starting with <name>
-    -l, --list     List scenes, using <name> as optional filter
-    -m, --max <n>  Show at most <n> scenes when listing (10 by default)
-    -c, --create   Create scene <name> using current lights state
+    --debug                     output errors to log file
+    -v, --version               output the version number
+    -h, --help                  output usage information
 
-  i, on            Switch all lights on  
-  o, off           Switch all lights off
+  Commands:
+
+    setup [options]             Configure hue bridge or show current config
+    on [room] [otherRooms...]   Turn on all lights, or turn on lights in specific room(s)
+    off [room] [otherRooms...]  Turn off all lights, or turn off lights in specific room(s)
+    scene|s [options] [name]    Activate scene starting with <name>
+    user|u [options]            View and unregister users on bridge
 ```
