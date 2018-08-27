@@ -1,8 +1,10 @@
 # hue-cli-extended
 
 [![NPM version](https://img.shields.io/npm/v/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
-![Node version](https://img.shields.io/badge/node-%3E%3D5.0.0-brightgreen.svg)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![npm](https://img.shields.io/npm/dt/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
+[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
+[![node](https://img.shields.io/node/v/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
+[![NpmLicense](https://img.shields.io/npm/l/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
 
 > Simple command line interface for Philips Hue.
 
