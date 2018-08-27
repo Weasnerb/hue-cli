@@ -18,6 +18,9 @@ npm install -g @weasnerb/hue-cli-extended
 
 > Note: Each command also has a -h flag for extra help!
 
+[//]: # (Start Usage Replace -- Do not remove this comment!)
+
+
 ```text
   Usage: hue <command> [options]
 
@@ -31,9 +34,12 @@ npm install -g @weasnerb/hue-cli-extended
 
   Commands:
 
+    scene|s [options] [name]    Activate scene starting with <name>
     setup [options]             Configure hue bridge or show current config
     on [room] [otherRooms...]   Turn on all lights, or turn on lights in specific room(s)
     off [room] [otherRooms...]  Turn off all lights, or turn off lights in specific room(s)
-    scene|s [options] [name]    Activate scene starting with <name>
     user|u [options]            View and unregister users on bridge
+
 ```
+
+[//]: # (End Usage Replace -- Do not remove this comment!)
