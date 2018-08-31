@@ -20,7 +20,6 @@ npm install -g @weasnerb/hue-cli-extended
 
 [//]: # (Start Usage Replace -- Do not remove this comment!)
 
-
 ```text
   Usage: hue <command> [options]
 

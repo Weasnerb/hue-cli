@@ -146,8 +146,8 @@ class setUsage {
    * @param {string} text 
    */
   replaceInMarkdown(file, replaceTag, text) {
-    let output = '';
-    let markdownText = fs.readFileSync(file).toString();
+    let outputLines = [];
+    let markdownText = fs.readFileSync(file).toString().replace(/\r\n/g, '\n');
     if (markdownText && typeof markdownText === 'string') {
       let lines = markdownText.split('\n');
       let replace = false;
@@ -156,25 +156,25 @@ class setUsage {
       lines.forEach((line) => {
         if (replace) {
           if (line.includes(endReplace)) {
-            output += '\n\n';
-            output += text;
-            output += '\n\n';
             replace = false;
-            output += line;
+            outputLines.push('');
+            outputLines.push(text);
+            outputLines.push('');
+            outputLines.push(line);
           }
         } else {
           if (line.includes(startReplace)) {
             replace = true;
           }
-          output += line;
+          outputLines.push(line);
         }
       })
     }
     try {
-      fs.writeFileSync(file, output);
-      console.log(file + ' updated successfully!')
+      fs.writeFileSync(file, outputLines.join('\n'));
+      console.log(path.basename(file) + ' updated successfully!')
     } catch (error) {
-      console.error('Error writing file: ' + file, '\n', error);
+      console.error('Error writing file: ' + path.basename(file), '\n', error);
     }
   }
 }
