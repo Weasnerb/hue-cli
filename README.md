@@ -1,8 +1,10 @@
 # hue-cli-extended
 
 [![NPM version](https://img.shields.io/npm/v/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
-![Node version](https://img.shields.io/badge/node-%3E%3D5.0.0-brightgreen.svg)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![npm](https://img.shields.io/npm/dt/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
+[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
+[![node](https://img.shields.io/node/v/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
+[![NpmLicense](https://img.shields.io/npm/l/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
 
 > Simple command line interface for Philips Hue.
 
@@ -14,7 +16,9 @@ npm install -g @weasnerb/hue-cli-extended
 
 ### Usage
 
-> Note: Each command also has a -h flag for extra help!
+#### Base Usage
+
+[//]: # (Start Usage Replace -- Do not remove this comment!)
 
 ```text
   Usage: hue <command> [options]
@@ -29,9 +33,24 @@ npm install -g @weasnerb/hue-cli-extended
 
   Commands:
 
+    scene|s [options] [name]    Activate scene starting with <name>
     setup [options]             Configure hue bridge or show current config
     on [room] [otherRooms...]   Turn on all lights, or turn on lights in specific room(s)
     off [room] [otherRooms...]  Turn off all lights, or turn off lights in specific room(s)
-    scene|s [options] [name]    Activate scene starting with <name>
     user|u [options]            View and unregister users on bridge
+
 ```
+
+[//]: # (End Usage Replace -- Do not remove this comment!)
+
+[//]: # (Start SubCommandUsage Replace -- Do not remove this comment!)
+
+#### Specific Command Usage
+
+- [Scene](documentation/usage/scene.md)
+- [Setup](documentation/usage/setup.md)
+- [On](documentation/usage/on.md)
+- [Off](documentation/usage/off.md)
+- [User](documentation/usage/user.md)
+
+[//]: # (End SubCommandUsage Replace -- Do not remove this comment!)
