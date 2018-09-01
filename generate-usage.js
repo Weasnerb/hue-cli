@@ -5,6 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf')
 
+const pkg = require('./package.json');
+
 const usageDocumentationDir = path.join(__dirname, '/documentation', '/usage');
 
 class setUsage {
@@ -108,7 +110,8 @@ class setUsage {
       this.generateUsageDocumentation(root, usageDocumentationDir, parentUsageMarkdown);
       
       let relativeUsageDir = path.relative(__dirname, usageDocumentationDir);
-      let subCommandUsageLinks = this.getCommandUsageLinks(root, relativeUsageDir);
+      let githubDocLink = path.join(pkg.homepage, '/blob/master/', relativeUsageDir)
+      let subCommandUsageLinks = this.getCommandUsageLinks(root, githubDocLink);
       let subCommandMarkdownLinks = this.getCommandUsageMarkdownLinks(subCommandUsageLinks, 4)
       if (subCommandMarkdownLinks) {
         this.replaceInMarkdown(readmePath, 'SubCommandUsage', subCommandMarkdownLinks)
