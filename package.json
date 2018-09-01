@@ -20,6 +20,7 @@
     "philips",
     "hue",
     "cli",
+    "user",
     "scene",
     "bridge"
   ],

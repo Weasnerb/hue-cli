@@ -47,10 +47,10 @@ npm install -g @weasnerb/hue-cli-extended
 
 #### Specific Command Usage
 
-- [Scene](documentation/usage/scene.md)
-- [Setup](documentation/usage/setup.md)
-- [On](documentation/usage/on.md)
-- [Off](documentation/usage/off.md)
-- [User](documentation/usage/user.md)
+- [Scene](https:/github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/scene.md)
+- [Setup](https:/github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/setup.md)
+- [On](https:/github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/on.md)
+- [Off](https:/github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/off.md)
+- [User](https:/github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/user.md)
 
 [//]: # (End SubCommandUsage Replace -- Do not remove this comment!)
