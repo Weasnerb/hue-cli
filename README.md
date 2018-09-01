@@ -16,7 +16,7 @@ npm install -g @weasnerb/hue-cli-extended
 
 ### Usage
 
-> Note: Each command also has a -h flag for extra help!
+#### Base Usage
 
 [//]: # (Start Usage Replace -- Do not remove this comment!)
 
@@ -42,3 +42,15 @@ npm install -g @weasnerb/hue-cli-extended
 ```
 
 [//]: # (End Usage Replace -- Do not remove this comment!)
+
+[//]: # (Start SubCommandUsage Replace -- Do not remove this comment!)
+
+#### Specific Command Usage
+
+- [Scene](documentation/usage/scene.md)
+- [Setup](documentation/usage/setup.md)
+- [On](documentation/usage/on.md)
+- [Off](documentation/usage/off.md)
+- [User](documentation/usage/user.md)
+
+[//]: # (End SubCommandUsage Replace -- Do not remove this comment!)

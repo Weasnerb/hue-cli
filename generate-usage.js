@@ -101,33 +101,53 @@ class setUsage {
   generateAllUsageDocumentation(root) {
     this.cleanUsageDocumenation();
 
+    let readmePath = path.join(__dirname, '/README.md');
+
     if (root.commands) {
-      this.generateUsageDocumentation(root, usageDocumentationDir);
+      let parentUsageMarkdown = '../../README.md';
+      this.generateUsageDocumentation(root, usageDocumentationDir, parentUsageMarkdown);
+      
+      let relativeUsageDir = path.relative(__dirname, usageDocumentationDir);
+      let subCommandUsageLinks = this.getCommandUsageLinks(root, relativeUsageDir);
+      let subCommandMarkdownLinks = this.getCommandUsageMarkdownLinks(subCommandUsageLinks, 4)
+      if (subCommandMarkdownLinks) {
+        this.replaceInMarkdown(readmePath, 'SubCommandUsage', subCommandMarkdownLinks)
+      }
     }
 
     if (root.help) {
       root.help = root.help.replace(/Usage: index/gm, 'Usage: hue')
       let markdownText = '```text' + root.help + '```';
-      this.replaceInMarkdown(path.join(__dirname, '/README.md'), 'Usage', markdownText)
+      this.replaceInMarkdown(readmePath, 'Usage', markdownText)
     }
   }
 
   /**
    * Helper function to generate Usage documentation
-   * @param {*} root 
-   * @param {*} dir 
+   * @param {object} root
+   * @param {path} dir Directory to save command usage in
+   * @param {string} parentUsageMarkdownPath This is used to generate back button on child commands.
    */
-  generateUsageDocumentation(root, dir) {
+  generateUsageDocumentation(root, dir, parentUsageMarkdownPath) {
     let commands = Object.keys(root.commands)
     commands.forEach((command) => {
       if (command.commands) {
         let subdir = path.join(dir, '/' + command);
         fs.mkdirSync(subdir);
-        this.generateUsageDocumentation(command, subdir);
+        let subCommandParentMarkdownPath = path.join('../', command + '.md');
+        this.generateUsageDocumentation(command, subdir, subCommandParentMarkdownPath);
       }
-
-      let prettyPrintCommand = command.substring(0, 1).toUpperCase() + command.substring(1);
-      let markdown = '# ' + prettyPrintCommand + ' Command Usage\n\n```text' + root.commands[command].help + '```';
+      
+      let prettyPrintCommand = this.prettyPrint(command)
+      let markdown = '# ' + prettyPrintCommand + ' Command Usage\n\n'
+      markdown += '[<- Back](' + parentUsageMarkdownPath + ')\n\n';
+      markdown += '```text' + root.commands[command].help + '```';
+      
+      let subCommandUsageLinks = this.getCommandUsageLinks(command);
+      if (subCommandUsageLinks && subCommandUsageLinks.length != 0) {
+        markdown += '\n'
+        markdown += this.getCommandUsageMarkdownLinks(subCommandUsageLinks, 2);
+      }
 
       let filePath = path.join(dir, command + '.md');
       try {
@@ -135,9 +155,56 @@ class setUsage {
         console.log(prettyPrintCommand + ' Command Usage updated successfully!')
       } catch (error) {
         console.error('Error writing file: ', filePath, '\n', error);
-      }
-
+      } 
     })
+  }
+
+  /**
+   * Get the links to each sub command's usage markdown file
+   * @param {object} command 
+   * @param {string} [defaultDir]
+   */
+  getCommandUsageLinks(command, defaultDir) {
+    let links = [];
+    if (command.commands) {
+      let commands = Object.keys(command.commands)
+      commands.forEach(subCommand => {
+        let link = {};
+        link['name'] = this.prettyPrint(subCommand);
+        if (defaultDir) {
+          link['link'] = path.join(defaultDir + '/', subCommand + '.md'); 
+        } else {
+          link['link'] = './' + command + '/' + subCommand + '.md'; 
+        }
+        links.push(link);
+      })
+    } 
+    return links;
+  }
+
+  /**
+   * Generate All
+   * @param {[]} commandUsageLinks
+   * @param {number} [headerDepth] Header depth, if provided, must be between 1-6 to represent h1-h6
+   */
+  getCommandUsageMarkdownLinks(commandUsageLinks, headerDepth) {
+    let markdown = '';
+    if (headerDepth) {
+      if (typeof headerDepth !== 'number' || headerDepth < 1 || headerDepth > 6) {
+        let errorMsg = 'Header Depth, must be between 1-6';
+        console.error(errorMsg);
+        throw new Error(errorMsg);
+      }
+      markdown += '#'.repeat(headerDepth);
+      markdown += ' Specific Command Usage\n\n'
+    }
+
+    let markdownLinks = []
+    commandUsageLinks.forEach(link => {
+      markdownLinks.push('- [' + link.name + '](' + link.link + ')');
+    })
+
+    return markdown + markdownLinks.join('\n');
   }
 
   /**
@@ -172,10 +239,25 @@ class setUsage {
     }
     try {
       fs.writeFileSync(file, outputLines.join('\n'));
-      console.log(path.basename(file) + ' updated successfully!')
+      console.log(path.basename(file) + '\'s ' + replaceTag +  ' updated successfully!')
     } catch (error) {
       console.error('Error writing file: ' + path.basename(file), '\n', error);
     }
+  }
+
+
+  /**
+   * Camel Case a word.
+   * Example: paris -> Paris
+   * @param {string} word 
+   */
+  prettyPrint(word) {
+    if (typeof word !== 'string') {
+      let errorMsg = 'Expected a String';
+      console.error(errorMsg);
+      throw new Error(errorMsg);
+    }
+    return word.substring(0, 1).toUpperCase() + word.substring(1);
   }
 }
 

@@ -1,5 +1,7 @@
 # Setup Command Usage
 
+[<- Back](../../README.md)
+
 ```text
   Usage: setup [options]
 

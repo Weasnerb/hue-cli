@@ -1,5 +1,7 @@
 # On Command Usage
 
+[<- Back](../../README.md)
+
 ```text
   Usage: on [options] [room] [otherRooms...]
 
