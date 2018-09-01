@@ -1,6 +1,6 @@
 {
   "name": "@weasnerb/hue-cli-extended",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple command line interface for Philips Hue",
   "repository": {
     "type": "git",
