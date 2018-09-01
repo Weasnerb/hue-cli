@@ -14,7 +14,7 @@
     "lint": "eslint *.js",
     "generateUsage": "node ./generate-usage.js",
     "prepublish": "npm run lint && npm run generateUsage",
-    "postpublish": "v=$(node -p -e \"require('./package.json').version\") && git tag -a $v -m '$v' && git push --tags"
+    "postpublish": "git push --tags"
   },
   "keywords": [
     "philips",
@@ -40,7 +40,8 @@
   },
   "devDependencies": {
     "eslint": "^3.19.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "url-join": "^4.0.0"
   },
   "engines": {
     "node": ">=5.0.0"

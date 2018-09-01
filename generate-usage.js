@@ -3,7 +3,8 @@
 const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const rimraf = require('rimraf')
+const rimraf = require('rimraf');
+const urljoin = require('url-join');
 
 const pkg = require('./package.json');
 
@@ -110,8 +111,8 @@ class setUsage {
       this.generateUsageDocumentation(root, usageDocumentationDir, parentUsageMarkdown);
       
       let relativeUsageDir = path.relative(__dirname, usageDocumentationDir);
-      let githubDocLink = path.join(pkg.homepage, '/blob/master/', relativeUsageDir)
-      let subCommandUsageLinks = this.getCommandUsageLinks(root, githubDocLink);
+      let githubDocLink = urljoin(pkg.homepage, '/blob/master/', relativeUsageDir)
+      let subCommandUsageLinks = this.getCommandUsageLinks(root, githubDocLink, true);
       let subCommandMarkdownLinks = this.getCommandUsageMarkdownLinks(subCommandUsageLinks, 4)
       if (subCommandMarkdownLinks) {
         this.replaceInMarkdown(readmePath, 'SubCommandUsage', subCommandMarkdownLinks)
@@ -166,16 +167,19 @@ class setUsage {
    * Get the links to each sub command's usage markdown file
    * @param {object} command 
    * @param {string} [defaultDir]
+   * @param {boolean} [defaultDirIsUrl]
    */
-  getCommandUsageLinks(command, defaultDir) {
+  getCommandUsageLinks(command, defaultDir, defaultDirIsUrl) {
     let links = [];
     if (command.commands) {
       let commands = Object.keys(command.commands)
       commands.forEach(subCommand => {
         let link = {};
         link['name'] = this.prettyPrint(subCommand);
-        if (defaultDir) {
-          link['link'] = path.join(defaultDir + '/', subCommand + '.md'); 
+        if (defaultDir && !defaultDirIsUrl) {
+          link['link'] = path.join(defaultDir, subCommand + '.md'); 
+        } else if (defaultDir && defaultDirIsUrl) {
+          link['link'] = urljoin(defaultDir, subCommand + '.md'); 
         } else {
           link['link'] = './' + command + '/' + subCommand + '.md'; 
         }
