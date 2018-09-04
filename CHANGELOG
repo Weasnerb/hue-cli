@@ -1,16 +1,23 @@
-# 1.2.0
+# 1.0.4
 
-+ Rewrote in Commander Js
-+ Added turn on and off room(s) by name
-+ Added colored error and success output
-+ Added basic error logging
++ Added new ways to turn on and off lights.
 
-# 1.1.0
+# 1.0.3
 
-+ Added scene creation
-+ Improved scene name matching
-+ Improved switch on/off
+* Fix documentation links - GitHub Links were https:/ instead of https://
+
+# 1.0.2
+
+* Fix documentation links - Documentation relative links on README.md need to point to GitHub repo
+
+# 1.0.1
+
++ Added ability to generate/update usage documentation programatically
 
 # 1.0.0
 
-- Initial version
++ Forked and Rewrote hue-cli from https://github.com/sinedied/hue-cli using Commander Js
++ Added turn on and off room(s) by name
++ Added user management
++ Added colored error and success output
++ Added basic error logging

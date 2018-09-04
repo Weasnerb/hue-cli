@@ -23,7 +23,7 @@ module.exports = function bridgeCommand(program) {
       .then(data => {
         return data.devices.filter(u => u.username === userId);
       })
-      .fail((err) => program.util.errorMessage('Unable to get user with id: ' + userId, err));
+      .fail(err => program.util.errorMessage('Unable to get user with id: ' + userId, err));
   }
 
   /**
@@ -51,7 +51,7 @@ module.exports = function bridgeCommand(program) {
           return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
         });
       })
-      .fail((err) => program.util.errorMessage('Unable to get users', err));
+      .fail(err => program.util.errorMessage('Unable to get users', err));
   }
 
   /**
@@ -59,7 +59,7 @@ module.exports = function bridgeCommand(program) {
    */
   function _getCurrentUser() {
     _getUser(program.config.user)
-      .then((users) => {
+      .then(users => {
         for (let user of users) {
           table.push([user.username, user.name, user.created, user.accessed])
         }
@@ -69,7 +69,7 @@ module.exports = function bridgeCommand(program) {
           program.util.errorMessage('Could not get current user');
         }
       })
-      .fail((err) => program.util.errorMessage('Could not get current user', err))
+      .fail(err => program.util.errorMessage('Could not get current user', err))
   }
 
   /**
@@ -78,13 +78,13 @@ module.exports = function bridgeCommand(program) {
    */
   function _listUsers(name) {
     _getUsers(name)
-      .then((users) => {
+      .then(users => {
         for (let user of users) {
           table.push([user.username, user.name, user.created, user.accessed])
         }
         console.log(table.toString());
       })
-      .fail((err) => program.util.errorMessage('Could not get list of users', err))
+      .fail(err => program.util.errorMessage('Could not get list of users', err))
   }
 
   /**
@@ -99,26 +99,26 @@ module.exports = function bridgeCommand(program) {
           name: 'value',
           message: 'Do you want to delete current user?'
         })
-        .then((data) => {
+        .then(data => {
           if (data.value) {
             program.config.api.deleteUser(userId)
               .then(() => {
                 program.util.successMessage('Deleted user with id: ' + userId);
                 resolve();
               })
-              .fail((err) => program.util.errorMessage('Unable to delete user with id: ' + userId, err))
+              .fail(err => program.util.errorMessage('Unable to delete user with id: ' + userId, err))
           } else {
             resolve();
           }
         })
-        .catch((err) => program.util.errorMessage('Issue confirming deletion of self', err))
+        .catch(err => program.util.errorMessage('Issue confirming deletion of self', err))
       } else {
         program.config.api.deleteUser(userId)
           .then(() => {
             program.util.successMessage('Deleted user with id: ' + userId);
             resolve();
           })
-          .fail((err) => program.util.errorMessage('Unable to delete user with id: ' + userId, err))
+          .fail(err => program.util.errorMessage('Unable to delete user with id: ' + userId, err))
       }
     })
   }
@@ -129,14 +129,14 @@ module.exports = function bridgeCommand(program) {
    */
   function _purgeUsers(name) {
     _getUsers(name)
-      .then((users) => {
+      .then(users => {
         let message = 'Are you sure you want to purge all users' + (typeof name === 'string' ? ' with name containing ' + name : '') + '?'
         prompts({
           type: 'confirm',
           name: 'value',
           message: message
         })
-        .then((data) => {
+        .then(data => {
           if (data.value) {
             // When purging, if current user is to be deleted, always purge last and ask if sure they want to purge
             let currentUserToBeDeleted = false;
@@ -151,13 +151,13 @@ module.exports = function bridgeCommand(program) {
             if (currentUserToBeDeleted) {
               Promise.all(deletions)
                 .then(() => _deleteUserById(program.config.user))
-                .catch(() => console.log('error out'))
+                .catch(err => program.util.errorMessage('Error occured while purging users', err))
             }
           }
         })
-        .catch((err) => program.util.errorMessage('Issue confirming deletion of self', err))
+        .catch(err => program.util.errorMessage('Issue confirming deletion of self', err))
       })
-      .fail((err) => program.util.errorMessage('Could not purge users from bridge', err))
+      .fail(err => program.util.errorMessage('Could not purge users from bridge', err))
   }
 
   /**

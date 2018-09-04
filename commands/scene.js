@@ -39,7 +39,7 @@ module.exports = function sceneCommand(program) {
       .then(scenes => {
         scenes.forEach(scene => console.log(scene.name));
       })
-      .fail(() => program.util.errorMessage('No scenes found'))
+      .fail(err => program.util.errorMessage('No scenes found', err))
   }
 
   /**
@@ -70,7 +70,7 @@ module.exports = function sceneCommand(program) {
       .getGroup(0)
       .then(group => program.config.api.createBasicScene(group.lights, name))
       .then(() => program.util.successMessage('Created scene successfully!'))
-      .fail((err) => program.util.errorMessage('Cannot create scene with the name ' + name, err));
+      .fail(err => program.util.errorMessage('Cannot create scene with the name ' + name, err));
   }
 
 	program

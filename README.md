@@ -27,17 +27,17 @@ npm install -g @weasnerb/hue-cli-extended
 
   Options:
 
-    --debug                     output errors to log file
-    -v, --version               output the version number
-    -h, --help                  output usage information
+    --debug                               output errors to log file
+    -v, --version                         output the version number
+    -h, --help                            output usage information
 
   Commands:
 
-    scene|s [options] [name]    Activate scene starting with <name>
-    setup [options]             Configure hue bridge or show current config
-    on [room] [otherRooms...]   Turn on all lights, or turn on lights in specific room(s)
-    off [room] [otherRooms...]  Turn off all lights, or turn off lights in specific room(s)
-    user|u [options]            View and unregister users on bridge
+    scene|s [options] [name]              Activate scene starting with <name>
+    setup [options]                       Configure hue bridge or show current config
+    on [options] [room] [otherRooms...]   Turn on all lights, or turn on lights in specific room(s)
+    off [options] [room] [otherRooms...]  Turn off all lights, or turn off lights in specific room(s)
+    user|u [options]                      View and unregister users on bridge
 
 ```
 

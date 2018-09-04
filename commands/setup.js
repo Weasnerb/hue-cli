@@ -18,7 +18,7 @@ module.exports = function setupCommand(program) {
 
     hue
       .nupnpSearch()
-      .then((bridges) => {
+      .then(bridges => {
         let bridge = ip ? bridges.find(b => b.ipaddress === ip) : bridges[0];
         if (bridge) {
           program.config.bridge = bridge.ipaddress;
@@ -27,7 +27,7 @@ module.exports = function setupCommand(program) {
         }
         return Promise.reject();
       })
-      .catch((err) => program.util.errorMessage('No bridge found'))
+      .catch(err => program.util.errorMessage('No bridge found', err))
       .then(bridge => {
         if (bridge) {
           new hue.api()
@@ -36,9 +36,10 @@ module.exports = function setupCommand(program) {
               program.config.user = user;
               program.util.successMessage('Linked bridge successfully');
             })
-            .catch((err) => program.util.errorMessage('Cannot link, press the button on bridge and try again.', err));
+            .catch(err => program.util.errorMessage('Cannot link, press the button on bridge and try again.', err));
         }
-      });
+      })
+      .fail(err => program.util.errorMessage('Error linking to bridge', err));
   }
 
   /**
@@ -50,7 +51,7 @@ module.exports = function setupCommand(program) {
       .then(bridges => {
         bridges.forEach(b => console.log(b.ipaddress));
       })
-      .fail(() => console.error('No bridge found'));
+      .fail(err => console.error('No bridge found', err));
 
   }
 

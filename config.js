@@ -64,7 +64,7 @@ module.exports = function (program) {
           return program.util.errorMessage(messages);
         }
       })
-      .fail((err) => program.util.errorMessage('Unable to check if user exists', err));
+      .fail(err => program.util.errorMessage('Unable to check if user exists', err));
     }
 
     /**

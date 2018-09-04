@@ -13,8 +13,9 @@ module.exports = function (program) {
      * Display Error, Log err to file, and Exit
      * @param {string|string[]} messageToDisplay 
      * @param {object} [err]
+     * @param {boolean} [exit]
      */
-    errorMessage(messageToDisplay, err) {
+    errorMessage(messageToDisplay, err, exit = true) {
       let messages = (!Array.isArray(messageToDisplay) ? [messageToDisplay] : messageToDisplay);
       
       if (err && program.debug) {
@@ -22,14 +23,19 @@ module.exports = function (program) {
         this._log(err);
       }
       
-      // Commander.js error formatting (with coloring)
-      console.error();
+      // Commander.js error formatting (with coloring) if exit == true
+      let spaces = '';
+      if (exit) {
+        spaces = '  ';
+        console.error();
+      }
       messages.forEach(function(message, index) {
-        console.error((index == 0 ? '  error: ': '  ') + chalk.red(message));
+        console.error(spaces + (index == 0 ? 'error: ': '') + chalk.red(message));
       })
-      console.error();
-      
-      return process.exit(1);
+      if (exit) {
+        console.error();
+        return process.exit(1);
+      }
     }
 
     /**
