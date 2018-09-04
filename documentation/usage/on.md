@@ -13,4 +13,5 @@
     --light-id <lightIds>     Turn on individual lights by their id, in comma separated format
     -h, --help                output usage information
 
+
 ```

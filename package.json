@@ -13,7 +13,8 @@
   "scripts": {
     "lint": "eslint *.js",
     "generateUsage": "node ./generate-usage.js",
-    "prepublish": "npm run lint && npm run generateUsage",
+    "preversion": "npm run generateUsage",
+    "prepublishOnly": "npm run lint",
     "postpublish": "git push --tags"
   },
   "keywords": [
@@ -33,13 +34,13 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "cli-table": "^0.3.1",
-    "commander": "^2.16.0",
+    "commander": "^2.17.0",
     "diacritics": "^1.3.0",
-    "node-hue-api": "^2.4.1",
-    "prompts": "^0.1.14"
+    "node-hue-api": "^2.4.3",
+    "prompts": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
+    "eslint": "^5.5.0",
     "rimraf": "^2.6.2",
     "url-join": "^4.0.0"
   },

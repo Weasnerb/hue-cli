@@ -3,6 +3,7 @@
 [![NPM version](https://img.shields.io/npm/v/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
 [![npm](https://img.shields.io/npm/dt/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
 [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
+[![Dependency Status](https://img.shields.io/david/weasnerb/hue-cli-extended.svg)](https://david-dm.org/weasnerb/hue-cli-extended)
 [![node](https://img.shields.io/node/v/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
 [![NpmLicense](https://img.shields.io/npm/l/@weasnerb/hue-cli-extended.svg)](https://www.npmjs.com/package/@weasnerb/hue-cli-extended)
 
@@ -14,9 +15,9 @@
 npm install -g @weasnerb/hue-cli-extended
 ```
 
-### Usage
+## Usage
 
-#### Base Usage
+### Base Usage
 
 [//]: # (Start Usage Replace -- Do not remove this comment!)
 
@@ -39,13 +40,14 @@ npm install -g @weasnerb/hue-cli-extended
     off [options] [room] [otherRooms...]  Turn off all lights, or turn off lights in specific room(s)
     user|u [options]                      View and unregister users on bridge
 
+
 ```
 
 [//]: # (End Usage Replace -- Do not remove this comment!)
 
 [//]: # (Start SubCommandUsage Replace -- Do not remove this comment!)
 
-#### Specific Command Usage
+### Specific Command Usage
 
 - [Scene](https://github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/scene.md)
 - [Setup](https://github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/setup.md)

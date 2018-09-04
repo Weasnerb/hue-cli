@@ -113,7 +113,7 @@ class setUsage {
       let relativeUsageDir = path.relative(__dirname, usageDocumentationDir);
       let githubDocLink = urljoin(pkg.homepage, '/blob/master/', relativeUsageDir)
       let subCommandUsageLinks = this.getCommandUsageLinks(root, githubDocLink, true);
-      let subCommandMarkdownLinks = this.getCommandUsageMarkdownLinks(subCommandUsageLinks, 4)
+      let subCommandMarkdownLinks = this.getCommandUsageMarkdownLinks(subCommandUsageLinks, 3)
       if (subCommandMarkdownLinks) {
         this.replaceInMarkdown(readmePath, 'SubCommandUsage', subCommandMarkdownLinks)
       }

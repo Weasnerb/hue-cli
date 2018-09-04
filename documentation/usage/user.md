@@ -15,4 +15,5 @@
     -p, --purge [name]  Delete all registered users, using <name> as optional filter
     -h, --help          output usage information
 
+
 ```
