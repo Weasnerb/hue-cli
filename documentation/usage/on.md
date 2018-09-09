@@ -5,7 +5,7 @@
 ```text
   Usage: on [options] [room] [otherRooms...]
 
-  Turn on all lights, or turn on lights in specific room(s)
+  Turn on or off lights
 
   Options:
 

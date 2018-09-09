@@ -12,7 +12,7 @@ module.exports = function (program) {
   /**
    * Current Hue Config
    */
-  class config {
+  class Config {
     constructor() {
       this._config = {};
       this._loadConfig();
@@ -89,5 +89,5 @@ module.exports = function (program) {
 
   }
 
-  return new config();
+  return new Config();
 }

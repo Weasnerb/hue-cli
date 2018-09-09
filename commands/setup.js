@@ -1,9 +1,21 @@
 'use strict';
 
-module.exports = function setupCommand(program) {
+module.exports = function(program) {
 
   const hue = require('node-hue-api');
   const os = require('os');
+
+  /**
+   * List all Hue Bridges on Network
+   */
+  function _listBridges() {
+    hue
+      .nupnpSearch()
+      .then(bridges => {
+        bridges.forEach(b => console.log(((b.name) ? 'Name: ' +  b.name + ' at ip: ' : '') + b.ipaddress));
+      })
+      .fail((err) =>  program.util.errorMessage('Could not list bridges on network', err));
+  }
 
   /**
    * Setup a Hue Bridge
@@ -43,24 +55,11 @@ module.exports = function setupCommand(program) {
   }
 
   /**
-   * List all Hue Bridges on Network
-   */
-  function _listBridges() {
-    hue
-      .nupnpSearch()
-      .then(bridges => {
-        bridges.forEach(b => console.log(b.ipaddress));
-      })
-      .fail(err => console.error('No bridge found', err));
-
-  }
-
-  /**
    * Setup Command
    */
   program
     .command('setup')
-    .description('Configure hue bridge or show current config')
+    .description('Setup a new hue bridge')
     .option('-l, --list', 'List bridges on the network')
     .option('-i, --ip <ip>', 'Set bridge ip (use first bridge if not specified)')
     .option('--force', 'Force setup if already configured')

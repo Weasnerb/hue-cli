@@ -34,11 +34,12 @@ npm install -g @weasnerb/hue-cli-extended
 
   Commands:
 
-    scene|s [options] [name]              Activate scene starting with <name>
-    setup [options]                       Configure hue bridge or show current config
-    on [options] [room] [otherRooms...]   Turn on all lights, or turn on lights in specific room(s)
+    bridge|b [options]                    Manage current bridge
+    scene|s [options] [name]              Activate and create scenes
+    setup [options]                       Setup a new hue bridge
+    on [options] [room] [otherRooms...]   Turn on or off lights
     off [options] [room] [otherRooms...]  Turn off all lights, or turn off lights in specific room(s)
-    user|u [options]                      View and unregister users on bridge
+    user|u [options]                      Manage users on bridge
 
 
 ```
@@ -49,6 +50,7 @@ npm install -g @weasnerb/hue-cli-extended
 
 ### Specific Command Usage
 
+- [Bridge](https://github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/bridge.md)
 - [Scene](https://github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/scene.md)
 - [Setup](https://github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/setup.md)
 - [On](https://github.com/weasnerb/hue-cli-extended/blob/master/documentation/usage/on.md)

@@ -5,7 +5,7 @@
 ```text
   Usage: user|u [options]
 
-  View and unregister users on bridge
+  Manage users on bridge
 
   Options:
 

@@ -5,12 +5,13 @@ const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
 const urljoin = require('url-join');
+const util = require('./util')(null);
 
 const pkg = require('./package.json');
 
 const usageDocumentationDir = path.join(__dirname, '/documentation', '/usage');
 
-class setUsage {
+class SetUsage {
 
   constructor() {
     let baseProgramArgs = ['./index.js'];
@@ -24,22 +25,18 @@ class setUsage {
    * @param {string[]} programArgs 
    * @param {string} [command]
    */
-  getAllHelp(programArgs, command) {
+  getAllHelp(programArgs) {
     let root = {};
-    if (command) {
-      programArgs.push(command);
-    }
 
     root.help = this.getHelp(programArgs);
     root.commands = {};
     let commands = this.getCommandsFromHelp(root.help);
     commands.forEach((command) => {
-      root.commands[command] = this.getAllHelp(programArgs, command);
+      programArgs.push(command);
+      root.commands[command] = this.getAllHelp(programArgs);
+      programArgs.pop();
     });
 
-    if (command) {
-      programArgs.pop();
-    }
     return root;
   }
 
@@ -142,7 +139,7 @@ class setUsage {
         this.generateUsageDocumentation(command, subdir, subCommandParentMarkdownPath);
       }
       
-      let prettyPrintCommand = this.prettyPrint(command)
+      let prettyPrintCommand = util.prettyPrint(command)
       let markdown = '# ' + prettyPrintCommand + ' Command Usage\n\n'
       markdown += '[<- Back](' + parentUsageMarkdownPath + ')\n\n';
       markdown += '```text' + root.commands[command].help + '```';
@@ -175,7 +172,7 @@ class setUsage {
       let commands = Object.keys(command.commands)
       commands.forEach(subCommand => {
         let link = {};
-        link['name'] = this.prettyPrint(subCommand);
+        link['name'] = util.prettyPrint(subCommand);
         if (defaultDir && !defaultDirIsUrl) {
           link['link'] = path.join(defaultDir, subCommand + '.md'); 
         } else if (defaultDir && defaultDirIsUrl) {
@@ -252,20 +249,6 @@ class setUsage {
     }
   }
 
-
-  /**
-   * Camel Case a word.
-   * Example: paris -> Paris
-   * @param {string} word 
-   */
-  prettyPrint(word) {
-    if (typeof word !== 'string') {
-      let errorMsg = 'Expected a String';
-      console.error(errorMsg);
-      throw new Error(errorMsg);
-    }
-    return word.substring(0, 1).toUpperCase() + word.substring(1);
-  }
 }
 
-new setUsage();
+new SetUsage();

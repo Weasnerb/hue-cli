@@ -5,7 +5,7 @@
 ```text
   Usage: setup [options]
 
-  Configure hue bridge or show current config
+  Setup a new hue bridge
 
   Options:
 

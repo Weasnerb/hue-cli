@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function bridgeCommand(program) {
+module.exports = function(program) {
 
   const diacritics = require('diacritics');
   const prompts = require('prompts');
@@ -166,7 +166,7 @@ module.exports = function bridgeCommand(program) {
   program
     .command('user')
     .alias('u')
-    .description('View and unregister users on bridge')
+    .description('Manage users on bridge')
     .option('-c, --current', 'Get current user')
     .option('-l, --list [name]', 'List registered users, using <name> as optional filter')
     .option('-d, --delete <id>', 'Delete registered user with <id> from bridge')
