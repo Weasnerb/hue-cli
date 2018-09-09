@@ -2,8 +2,14 @@
 
 module.exports = function(program) {
   
-  var Table = require('cli-table');
-  var bridgeTable = new Table({head: ['Bridge Info', '']});
+  const Table = require('cli-table');
+  
+  /**
+   * Bridge Table
+   */
+  const bridgeTable = new Table({
+    head: ['Bridge Info', '']
+  });
 
   /**
    * Presses the link button on currently configured bridge

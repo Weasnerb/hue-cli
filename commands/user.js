@@ -9,7 +9,7 @@ module.exports = function(program) {
   /**
    * User table
    */
-  const table = new Table({
+  const userTable = new Table({
     head: ['User Id', 'Name', 'Created', 'Last Accessed'],
   })
 
@@ -61,10 +61,10 @@ module.exports = function(program) {
     _getUser(program.config.user)
       .then(users => {
         for (let user of users) {
-          table.push([user.username, user.name, user.created, user.accessed])
+          userTable.push([user.username, user.name, user.created, user.accessed])
         }
         if (users.length > 0) {
-          console.log(table.toString());
+          console.log(userTable.toString());
         } else {
           program.util.errorMessage('Could not get current user');
         }
@@ -80,9 +80,9 @@ module.exports = function(program) {
     _getUsers(name)
       .then(users => {
         for (let user of users) {
-          table.push([user.username, user.name, user.created, user.accessed])
+          userTable.push([user.username, user.name, user.created, user.accessed])
         }
-        console.log(table.toString());
+        console.log(userTable.toString());
       })
       .fail(err => program.util.errorMessage('Could not get list of users', err))
   }
