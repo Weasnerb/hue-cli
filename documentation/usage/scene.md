@@ -5,7 +5,7 @@
 ```text
   Usage: scene|s [options] [name]
 
-  Activate scene starting with <name>
+  Activate and create scenes
 
   Options:
 

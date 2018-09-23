@@ -8,7 +8,7 @@ module.exports = function (program) {
 
   const logPath = path.join(__dirname, '/hue.log');
 
-  class util {
+  class Util {
     /**
      * Display Error, Log err to file, and Exit
      * @param {string|string[]} messageToDisplay 
@@ -56,7 +56,21 @@ module.exports = function (program) {
     successMessage(messageToDisplay) {
       console.log(chalk.green(messageToDisplay));
     }
+
+    /**
+     * Camel Case a word.
+     * Example: paris -> Paris
+     * @param {string} word 
+     */
+    prettyPrint(word) {
+      if (typeof word !== 'string') {
+        let errorMsg = 'Expected a String';
+        console.error(errorMsg);
+        throw new Error(errorMsg);
+      }
+      return word.substring(0, 1).toUpperCase() + word.substring(1);
+    }
   }
 
-  return new util();
+  return new Util();
 }

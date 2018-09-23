@@ -6,12 +6,13 @@ const program = require('commander');
 const pkg = require('./package.json');
 
 // Global Helpers
-// Util must be first, because config requires it.
+// Util must be first, because config uses it.
 program.util = require('./util')(program);
 program.config = require('./config')(program);
 
-// Set all commands
-require('./commands')(program);
+let commands = require('./commands');
+// Load in all commands
+commands.loadAllCommands(program)
 
 // Set Top Level Options
 program

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function switchCommand(program) {
+module.exports = function(program) {
 
   const diacritics = require('diacritics');
 
@@ -90,7 +90,7 @@ module.exports = function switchCommand(program) {
    */
   program
     .command('on [room] [otherRooms...]')
-    .description('Turn on all lights, or turn on lights in specific room(s)')
+    .description('Turn on lights')
     .option('-l, --light <lightNames>', 'Turn on individual lights by their name, in comma separated format', _list)
     .option('--light-id <lightIds>', 'Turn on individual lights by their id, in comma separated format', _list)
     .action(function (room, otherRooms, command) {
@@ -118,7 +118,7 @@ module.exports = function switchCommand(program) {
    */
   program
     .command('off [room] [otherRooms...]')
-    .description('Turn off all lights, or turn off lights in specific room(s)')
+    .description('Turn off lights')
     .option('-l, --light <lightNames>', 'Turn off individual lights by their name, in comma separated format', _list)
     .option('--light-id <lightIds>', 'Turn off individual lights by their id, in comma separated format', _list)
     .action(function (room, otherRooms, command) {
